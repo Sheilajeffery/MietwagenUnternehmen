@@ -9,24 +9,23 @@ import javafx.scene.text.Text;
 public class DataMietwagen {
 
 	private SimpleObjectProperty<CheckBox> select;
-	private SimpleObjectProperty<TextField> id;
+	private SimpleObjectProperty<Text> id;
 	private SimpleObjectProperty<Text> marke;
-	private SimpleObjectProperty<TextField> vermietet;
-	private SimpleObjectProperty<ComboBox<Integer>> tag;
-	private SimpleObjectProperty<ComboBox<String>> monat;
-	private SimpleObjectProperty<ComboBox<Integer>> jahr;
-
-	private SimpleObjectProperty<TextField> vermietetVon;
+	private SimpleObjectProperty<Text> vermietet;
+	private SimpleObjectProperty<Text> tag;
+	private SimpleObjectProperty<Text> monat;
+	private SimpleObjectProperty<Text> jahr;
+	private SimpleObjectProperty<Text> vermietetVon;
 	
 	public DataMietwagen() {
 		select = new SimpleObjectProperty<CheckBox>();
-		id = new SimpleObjectProperty<TextField>();
+		id = new SimpleObjectProperty<Text>();
 		marke = new SimpleObjectProperty<Text>();
-		vermietet = new SimpleObjectProperty<TextField>();
-		tag = new SimpleObjectProperty<ComboBox<Integer>>();
-		monat = new SimpleObjectProperty<ComboBox<String>>();
-		jahr = new SimpleObjectProperty<ComboBox<Integer>>();
-		vermietetVon = new SimpleObjectProperty<TextField>();
+		vermietet = new SimpleObjectProperty<Text>();
+		tag = new SimpleObjectProperty<Text>();
+		monat = new SimpleObjectProperty<Text>();
+		jahr = new SimpleObjectProperty<Text>();
+		vermietetVon = new SimpleObjectProperty<Text>();
 }
 	
 	
@@ -39,18 +38,15 @@ public class DataMietwagen {
 		select.set(cb);
 	}
 
-	public TextField getId() {
+	public Text getId() {
 
 		return id.get();
 	}
 
-	public void setId(TextField id) {
+	public void setId(Text id) {
 		this.id.set(id);
 	}
 
-	public void TextField(TextField id) {
-		this.id.set(id);
-	}
 	
 	public void setMarke(Text marke) {
 		this.marke.set(marke);
@@ -60,44 +56,44 @@ public class DataMietwagen {
 		return marke.get();
 	}
 	
-	public ComboBox<Integer> getTag() {
+	public Text getTag() {
 		return tag.get();
 	}
 
-	public void setTag(ComboBox<Integer> tag) {
+	public void setTag(Text tag) {
 		this.tag.set(tag);
 	}
 	
-	public ComboBox<String> getMonat() {
+	public Text getMonat() {
 		return monat.get();
 	}
 
-	public void setMonat(ComboBox<String> monat) {
+	public void setMonat(Text monat) {
 		this.monat.set(monat);
 	}
 	
-	public ComboBox<Integer> getJahr() {
+	public Text getJahr() {
 		return jahr.get();
 	}
 
-	public void setJahr(ComboBox<Integer> jahr) {
+	public void setJahr(Text jahr) {
 		this.jahr.set(jahr);
 	}
 	
-	public void setVermietetVon(TextField vermietetVon) {
+	public void setVermietetVon(Text vermietetVon) {
 		this.vermietetVon.set(vermietetVon);
 	}
 	
-	public TextField vermietetVon(){
+	public Text getVermietetVon(){
 		return vermietetVon.get();
 	}
 	
-	public TextField getVermietet() {
+	public Text getVermietet() {
 
 		return vermietet.get();
 	}
 
-	public void setVermietet(TextField vermietet) {
+	public void setVermietet(Text vermietet) {
 		this.vermietet.set(vermietet);
 	}
 	

@@ -32,8 +32,8 @@ public class MietwagenTabelle {
 		spalte1.setMinWidth(22);
 		spalte1.setMaxWidth(22);
 
-		TableColumn<DataMietwagen, TextField> spalte2 = new TableColumn<DataMietwagen, TextField>("Id");
-		spalte2.setCellValueFactory(new PropertyValueFactory<DataMietwagen, TextField>("id"));
+		TableColumn<DataMietwagen, Text> spalte2 = new TableColumn<DataMietwagen, Text>("Id");
+		spalte2.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("id"));
 		spalte2.setMinWidth(100);
 		spalte2.setMaxWidth(100);
 
@@ -42,32 +42,32 @@ public class MietwagenTabelle {
 		spalte3.setMinWidth(100);
 		spalte3.setMaxWidth(100);
 
-		TableColumn<DataMietwagen, TextField> spalte4 = new TableColumn<DataMietwagen, TextField>("Vermietet");
-		spalte4.setCellValueFactory(new PropertyValueFactory<DataMietwagen, TextField>("vermietet"));
+		TableColumn<DataMietwagen, Text> spalte4 = new TableColumn<DataMietwagen, Text>("Vermietet");
+		spalte4.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("vermietet"));
 		spalte4.setMinWidth(100);
 		spalte4.setMaxWidth(1);
 
-		TableColumn<DataMietwagen, ComboBox<Integer>> spalte5 = new TableColumn<DataMietwagen, ComboBox<Integer>>("Tag");
-		spalte5.setCellValueFactory(new PropertyValueFactory<DataMietwagen, ComboBox<Integer>>("tag"));
+		TableColumn<DataMietwagen, Text> spalte5 = new TableColumn<DataMietwagen, Text>("Tag");
+		spalte5.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("tag"));
 		spalte5.setMinWidth(70);
 		spalte5.setMaxWidth(70);
-		
-		TableColumn<DataMietwagen, ComboBox<String>> spalte6 = new TableColumn<DataMietwagen, ComboBox<String>>("Monat");
-		spalte6.setCellValueFactory(new PropertyValueFactory<DataMietwagen, ComboBox<String>>("monat"));
+
+		TableColumn<DataMietwagen, Text> spalte6 = new TableColumn<DataMietwagen, Text>("Monat");
+		spalte6.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("monat"));
 		spalte6.setMinWidth(70);
 		spalte6.setMaxWidth(70);
-		
-		TableColumn<DataMietwagen, ComboBox<Integer>> spalte7 = new TableColumn<DataMietwagen, ComboBox<Integer>>("Jahr");
-		spalte7.setCellValueFactory(new PropertyValueFactory<DataMietwagen, ComboBox<Integer>>("jahr"));
+
+		TableColumn<DataMietwagen, Text> spalte7 = new TableColumn<DataMietwagen, Text>("Jahr");
+		spalte7.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("jahr"));
 		spalte7.setMinWidth(70);
 		spalte7.setMaxWidth(70);
 
-		TableColumn<DataMietwagen, TextField> spalte8 = new TableColumn<DataMietwagen, TextField>("Vermietet von");
-		spalte8.setCellValueFactory(new PropertyValueFactory<DataMietwagen, TextField>("vermietetVon"));
+		TableColumn<DataMietwagen, Text> spalte8 = new TableColumn<DataMietwagen, Text>("Vermietet von");
+		spalte8.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("vermietetVon"));
 		spalte8.setMinWidth(100);
 		spalte8.setMaxWidth(100);
 
-		tabelle.getColumns().addAll(spalte1, spalte2, spalte3, spalte4, spalte5, spalte6,spalte7,spalte8);
+		tabelle.getColumns().addAll(spalte1, spalte2, spalte3, spalte4, spalte5, spalte6, spalte7, spalte8);
 		return tabelle;
 	}
 
@@ -82,49 +82,41 @@ public class MietwagenTabelle {
 		return grid;
 	}
 
-	public void addNeueZeile(int id, String marke, boolean vermietet, Integer tag,String monat,Integer jahr, String vermietetVon) {
+	public void addNeueZeile(int id, String marke, boolean vermietet, Integer tag, String monat, Integer jahr,
+			String vermietetVon) {
 
 		CheckBox cb = new CheckBox();
-		TextField tId = new TextField();
+		Text tId = new Text();
 		Text tMarke = new Text();
-		TextField tVermietet = new TextField();
-		TextField tVermietetVon = new TextField();
-		
-		ObservableList<Integer> tage = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31);
-		ComboBox<Integer> tagcb = new ComboBox<Integer>(tage);
-		
-		ObservableList<String> monate = FXCollections.observableArrayList("januar","februar","marz","april","mai","juni","juli","august","september","oktober","november","dezember");
-		ComboBox<String> monatcb = new ComboBox<String>(monate);
-		
-		ObservableList<Integer> jahre = FXCollections.observableArrayList(2016,2017);
-		ComboBox<Integer> jahrcb = new ComboBox<Integer>(jahre);
-		
+		Text tVermietet = new Text();
+		Text tVermietetVon = new Text();
+		Text tTag = new Text();
+		Text tMonat = new Text();
+		Text tJahr = new Text();
+
 		tId.setText(id + "");
 		tMarke.setText(marke + "");
 
-		if(vermietet){
-		tVermietet.setText("ja");
-		tagcb.setValue(tag);  ///getSelectionModel().select(tage.get(tag));
-		monatcb.setValue(monat);
-		jahrcb.setValue(jahr);
-		}
-		else
+		if (vermietet) {
+			tVermietet.setText("ja");
+			tTag.setText(Integer.toString(tag));
+			tMonat.setText(monat);
+			tJahr.setText(Integer.toString(jahr));
+			tVermietetVon.setText(vermietetVon + "");
+		} else
 			tVermietet.setText("nein");
-		
-		
-		
 
-		tVermietetVon.setText(vermietetVon);
+		
 
 		boolean anlegenOK;
 		Datum datum;
-		
-		if(vermietet)
-			 datum = new Datum(tag.intValue(),monat,jahr.intValue()); 
+
+		if (vermietet)
+			datum = new Datum(tag.intValue(), monat, jahr.intValue());
 		else
-			 datum = null;
-		
-		Mietwagen m = new Mietwagen(id, marke, vermietet,datum, vermietetVon);
+			datum = null;
+
+		Mietwagen m = new Mietwagen(id, marke, vermietet, datum, vermietetVon);
 		anlegenOK = u.anlegen(m);
 
 		DataMietwagen dm = new DataMietwagen();
@@ -134,11 +126,11 @@ public class MietwagenTabelle {
 			dm.setId(tId);
 			dm.setMarke(tMarke);
 			dm.setVermietet(tVermietet);
-			dm.setTag(tagcb);
-			dm.setMonat(monatcb);
-			dm.setJahr(jahrcb);
+			dm.setTag(tTag);
+			dm.setMonat(tMonat);
+			dm.setJahr(tJahr);
 			dm.setVermietetVon(tVermietetVon);
-			
+
 			tabelle.getItems().add(dm);
 		}
 	}

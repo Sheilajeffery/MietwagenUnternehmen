@@ -82,24 +82,27 @@ public class Start extends Application {
 		markeField.setMaxWidth(100);
 
 		Label vermietetLabel = new Label("Vermietet: ");
-		CheckBox vermietetField = new CheckBox();
-		// vermietetField.setMaxWidth(40);
+		CheckBox vermietetBox = new CheckBox();
 
 		Label datumLabel = new Label("Vermietet bis: ");
-		TextField tagField = new TextField();
-		tagField.setMaxWidth(40);
-
-		TextField monatField = new TextField();
-		tagField.setMaxWidth(40);
-
-		TextField jahrField = new TextField();
-		tagField.setMaxWidth(40);
 
 		Label vermietetVonLabel = new Label("Vermietet von: ");
 		TextField vermietetVonField = new TextField();
 		vermietetVonField.setMaxWidth(100);
 
+		ObservableList<Integer> tage = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+				15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31);
+		ComboBox<Integer> tagcb = new ComboBox<Integer>(tage);
+
+		ObservableList<String> monate = FXCollections.observableArrayList("januar", "februar", "marz", "april", "mai",
+				"juni", "juli", "august", "september", "oktober", "november", "dezember");
+		ComboBox<String> monatcb = new ComboBox<String>(monate);
+
+		ObservableList<Integer> jahre = FXCollections.observableArrayList(2016, 2017);
+		ComboBox<Integer> jahrcb = new ComboBox<Integer>(jahre);
+
 		Button addButton = new Button("Add");
+
 		addButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -116,41 +119,31 @@ public class Start extends Application {
 				}
 
 				String marke = markeField.getText();
-				Boolean vermietet = vermietetField.isSelected();
-
-				ObservableList<Integer> tage = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-						13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31);
-				ComboBox<Integer> tagcb = new ComboBox<Integer>(tage);
-
-				ObservableList<String> monate = FXCollections.observableArrayList("januar", "februar", "marz", "april",
-						"mai", "juni", "juli", "august", "september", "oktober", "november", "dezember");
-				ComboBox<String> monatcb = new ComboBox<String>(monate);
-
-				ObservableList<Integer> jahre = FXCollections.observableArrayList(2016, 2017);
-				ComboBox<Integer> jahrcb = new ComboBox<Integer>(jahre);
-
-				String vermietetVon = vermietetVonField.getText();
+				Boolean vermietet = vermietetBox.isSelected();
+				String vermietetVon;
 				Integer tag;
 				String monat;
 				Integer jahr;
 
 				if (vermietet) {
-					 tag = tagcb.getValue();
-					 monat = monatcb.getValue();
-					 jahr = jahrcb.getValue();
+					tag = tagcb.getValue();
+					monat = monatcb.getValue();
+					jahr = jahrcb.getValue();
+					vermietetVon = vermietetVonField.getText();
 				} else {
-					 tag = null;
-					 monat = null;
-					 jahr = null;
+					tag = null;
+					monat = null;
+					jahr = null;
+					vermietetVon = null;
 				}
 				mt.addNeueZeile(id, marke, vermietet, tag, monat, jahr, vermietetVon);
 
 			}
 
 		});
-		
-		hbox.getChildren().addAll(idLabel, idField, markeLabel, markeField, vermietetLabel, vermietetField, datumLabel,
-				tagField, monatField, jahrField, vermietetVonLabel, vermietetVonField, addButton);
+
+		hbox.getChildren().addAll(idLabel, idField, markeLabel, markeField, vermietetLabel, vermietetBox, datumLabel,
+				tagcb, monatcb, jahrcb, vermietetVonLabel, vermietetVonField, addButton);
 		return hbox;
 
 	}
