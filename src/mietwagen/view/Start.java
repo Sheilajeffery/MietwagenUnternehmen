@@ -114,7 +114,7 @@ public class Start extends Application {
 				} catch (NumberFormatException e) {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Type Error...");
-					alert.setContentText("Das eingegebene Wert" + idField.getText() + "ist keine Zahl");
+					alert.setContentText("Das eingegebene Wert fur den id" + idField.getText() + "ist keine Zahl");
 					alert.showAndWait();
 				}
 
@@ -141,9 +141,38 @@ public class Start extends Application {
 			}
 
 		});
+		
+		Button deleteButton = new Button("delete");
+		
+		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				
+				int id = 0;
+				try {
+					id = Integer.parseInt(idField.getText());
+				} catch (NumberFormatException e) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Type Error...");
+					alert.setContentText("Das eingegebene Wert fur den id" + idField.getText() + "ist keine Zahl");
+					alert.showAndWait();
+				}
+
+				String marke = markeField.getText();
+				
+				mt.deleteZeile(id);
+		
+		
+		
+		
+			}
+			});
+		
+		
 
 		hbox.getChildren().addAll(idLabel, idField, markeLabel, markeField, vermietetLabel, vermietetBox, datumLabel,
-				tagcb, monatcb, jahrcb, vermietetVonLabel, vermietetVonField, addButton);
+				tagcb, monatcb, jahrcb, vermietetVonLabel, vermietetVonField, addButton,deleteButton);
 		return hbox;
 
 	}

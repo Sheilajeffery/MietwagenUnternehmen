@@ -95,7 +95,7 @@ public class MietwagenTabelle {
 		Text tJahr = new Text();
 
 		tId.setText(id + "");
-		tMarke.setText(marke + "");
+		tMarke.setText(marke);
 
 		if (vermietet) {
 			tVermietet.setText("ja");
@@ -132,7 +132,28 @@ public class MietwagenTabelle {
 			dm.setVermietetVon(tVermietetVon);
 
 			tabelle.getItems().add(dm);
+			
 		}
+	}
+	
+	public void deleteZeile(int id){
+		Text tId = new Text();
+		Text tMarke = new Text();
+		
+		tId.setText(Integer.toString(id));
+		
+		
+		Mietwagen m = new Mietwagen(id,null,false,null,null);
+		int i;
+		i = u.suchen(m);
+		DataMietwagen dm = new DataMietwagen();
+		 if(u.loschen(m))
+			
+		tabelle.getItems().remove(i);
+		
+		
+		
+		
 	}
 
 }
