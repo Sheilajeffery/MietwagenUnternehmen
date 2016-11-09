@@ -1,0 +1,14 @@
+0
+Marke1
+true
+31
+juni
+2016
+Ausleiher
+1
+Marke2
+false
+0
+null
+0
+null

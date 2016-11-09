@@ -1,5 +1,9 @@
 package mietwagen.view;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +19,11 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Start extends Application {
-
+	File file = new File("input.txt");
+	Scanner sc = null;
+	
+	
+	
 	MietwagenTabelle mt = new MietwagenTabelle();
 
 	public static void main(String[] args) {
@@ -26,12 +34,21 @@ public class Start extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
+		try {
+			sc = new Scanner(file);
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("nu merge cititul");
+			System.out.println(e);
+		}
+		
 		primaryStage.setTitle("Mietwagen Unternehmen");
 
 		BorderPane border = new BorderPane();
 		MenuBar menuBar = new MenuBar();
 		Menu menuFile = new Menu("File");
-		MenuItem file1 = new MenuItem("Neues Fenster");
+
+		
 
 		MenuItem exit = new MenuItem("Exit");
 		exit.setOnAction(new EventHandler<ActionEvent>() {
@@ -42,7 +59,7 @@ public class Start extends Application {
 			}
 		});
 
-		menuFile.getItems().add(file1);
+		
 		menuFile.getItems().add(exit);
 		menuBar.getMenus().add(menuFile);
 
@@ -51,6 +68,10 @@ public class Start extends Application {
 		border.setBottom(addMietwagen());
 
 		Scene scene = new Scene(border);
+		
+		
+		
+		
 
 		Screen screen = Screen.getPrimary();
 
@@ -60,10 +81,41 @@ public class Start extends Application {
 		primaryStage.setY(bounds.getMinY());
 		primaryStage.setWidth(bounds.getWidth());
 		primaryStage.setHeight(bounds.getHeight());
+		
+		
+		int id;
+		String marke;
+		Boolean vermietet; 
+		String vermietetVon;
+		Integer tag;
+		String monat;
+		Integer jahr;
+		
+		for(int i = 0; i<2; i++)
+		{
+			id = sc.nextInt();
+			marke = sc.next();
+			vermietet = sc.nextBoolean();
+			tag = sc.nextInt();
+			monat = sc.next();
+			jahr = sc.nextInt();
+			vermietetVon = sc.next();
+			
+			mt.addNeueZeile(id, marke, vermietet, tag, monat, jahr, vermietetVon);
+			
+		}
+		sc.close();	
+		
 
 		primaryStage.setScene(scene);
 
 		primaryStage.show();
+		
+		
+		
+		
+		
+		
 
 	}
 
