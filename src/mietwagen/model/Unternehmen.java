@@ -37,14 +37,16 @@ public class Unternehmen {
 			return -1;
 	}
 
-	public int suchenIdMarke(int id, String marke) {
+	public ArrayList<Mietwagen> suchenMarke(String marke) {
 
-		Mietwagen m = new Mietwagen(id, marke, false, null, null);
-
-		if (suchen(m) != -1 && m.marke.equals(marke))
-			return suchen(m); // position des Mietwagens
-		else
-			return -1; // kein Miwetwagen mit dieser Id und Marke
+		ArrayList<Mietwagen> markeList = new ArrayList<Mietwagen>();
+		
+		for (Mietwagen m : mietwagenList)
+			if(m.getMarke().equals(marke))
+				markeList.add(m);
+			
+			return markeList;	
+		
 
 	}
 

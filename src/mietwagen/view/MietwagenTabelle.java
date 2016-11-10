@@ -1,14 +1,19 @@
 package mietwagen.view;
 
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -130,26 +135,36 @@ public class MietwagenTabelle {
 			dm.setVermietetVon(tVermietetVon);
 
 			tabelle.getItems().add(dm);
-			
 
+		} else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Type Error...");
+			alert.setContentText("Ein Mietwagen mit der id: " + id + " existiert schon. Versuche eine andere id!");
+			alert.showAndWait();
 		}
 	}
 
 	public void deleteZeile(int id) {
 		Text tId = new Text();
-		
 
 		tId.setText(Integer.toString(id));
 
 		Mietwagen m = new Mietwagen(id, null, false, null, null);
 		int i;
 		i = u.suchen(m);
-		
+
 		if (u.loschen(m))
 
 			tabelle.getItems().remove(i);
+
+		else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Type Error...");
+			alert.setContentText("Es gibt kein Mietwagen mit der id: " + id);
+			alert.showAndWait();
+		}
 	}
-	
+
 	public void vermietenDatum(int id, String marke, boolean vermietet, Integer tag, String monat, Integer jahr,
 			String vermietetVon) {
 
@@ -182,8 +197,9 @@ public class MietwagenTabelle {
 		
 		int i;
 		i = u.suchen(m);
+		Mietwagen mi = u.getMietwagenList().get(i);
 		
-		if(i != -1)
+		if(i != -1 && !mi.getVermietet()){
 			u.vermietenBisDatum(m, datum);
 			
 		
@@ -198,8 +214,56 @@ public class MietwagenTabelle {
 			dm.setJahr(tJahr);
 			dm.setVermietetVon(tVermietetVon);
 		
-			tabelle.getItems().set(i, dm);
-			tabelle.getItems().get(i);
+			tabelle.getItems().set(i, dm);}
+			
+			else
+			{
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Type Error...");
+				alert.setContentText("Auto mit der id: " + id + " ist schon vermietet!");
+				alert.showAndWait();
+			}
 	}
+
+
+
+	public String nachMarkeSuchen(String marke) {
+		String markeListe;
+		markeListe = arrayListToString(u.suchenMarke(marke));
+		return markeListe;
+	}
+
+	public static String arrayListToString(ArrayList<Mietwagen> list) {
+
+		String li = "";
+		for (Mietwagen m : list) {
+			li = li + " id: " + m.getId() + " marke: " + m.getMarke() + " vermietet: " + m.getVermietet() + " ";
+			if (m.getVermietet()) {
+				li = li + " vermietet bis: " + m.getVermietet_bis_Datum().toString();
+				li = li + " vermietet von: " + m.getVermietetVon();
+			}
+
+			li = li + "\n";
+		}
+
+		return li;
+
+	}
+/*
+	public String listeSpeichern() {
+		String liste="";
+		System.out.println(u.getMietwagenList());
+
+		for (Mietwagen m : u.getMietwagenList()) {
+			liste = liste + m.getId()+"\n"+ m.getMarke()+"\n" + Integer.toString(m.getVermietet_bis_Datum().getTag())+"\n"
+					+ m.getVermietet_bis_Datum().getMonat()+"\n" + Integer.toString(m.getVermietet_bis_Datum().getJahr())
+					+"\n"+m.getVermietetVon()+"\n";
+
+		}
+		
+		return liste;
+	}
+
+*/	
 
 }

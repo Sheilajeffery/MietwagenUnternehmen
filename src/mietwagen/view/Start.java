@@ -2,6 +2,7 @@ package mietwagen.view;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 import javafx.application.Application;
@@ -10,20 +11,18 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import mietwagen.model.Mietwagen;
 
 public class Start extends Application {
 	File file = new File("input.txt");
 	Scanner sc = null;
-	
-	
-	
+
 	MietwagenTabelle mt = new MietwagenTabelle();
 
 	public static void main(String[] args) {
@@ -36,21 +35,18 @@ public class Start extends Application {
 
 		try {
 			sc = new Scanner(file);
-		}
-		catch (FileNotFoundException e) {
-			System.out.println("nu merge cititul");
+		} catch (FileNotFoundException e) {
+			System.out.println("file not found");
 			System.out.println(e);
 		}
-		
+
 		primaryStage.setTitle("Mietwagen Unternehmen");
 
 		BorderPane border = new BorderPane();
 		MenuBar menuBar = new MenuBar();
 		Menu menuFile = new Menu("File");
-
-		
-
 		MenuItem exit = new MenuItem("Exit");
+
 		exit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -59,19 +55,49 @@ public class Start extends Application {
 			}
 		});
 
-		
 		menuFile.getItems().add(exit);
 		menuBar.getMenus().add(menuFile);
+/*
+		Button saveButton = new Button("Tabelle Speichern");
 
+		saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+				String liste = mt.listeSpeichern();
+
+				try {
+					PrintWriter writer = new PrintWriter("input.txt");
+					writer.print(liste);
+					writer.close();
+				} catch (Exception e) {
+					System.out.println("Konnte nicht speichern!");
+
+				}
+				if (!liste.isEmpty()) {
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("Succes");
+					alert.setContentText("Die Liste wurde gespeichert!");
+					alert.showAndWait();
+				} else {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Failed");
+					alert.setContentText("Die Liste wurde nicht gespeichert!");
+					alert.showAndWait();
+				}
+
+			}
+		});
+
+border.setRight(saveButton);
+*/
 		border.setTop(menuBar);
+		
 		border.setCenter(mt.grid());
 		border.setBottom(addMietwagen());
 
 		Scene scene = new Scene(border);
-		
-		
-		
-		
 
 		Screen screen = Screen.getPrimary();
 
@@ -81,18 +107,16 @@ public class Start extends Application {
 		primaryStage.setY(bounds.getMinY());
 		primaryStage.setWidth(bounds.getWidth());
 		primaryStage.setHeight(bounds.getHeight());
-		
-		
+
 		int id;
 		String marke;
-		Boolean vermietet; 
+		Boolean vermietet;
 		String vermietetVon;
 		Integer tag;
 		String monat;
 		Integer jahr;
-		
-		for(int i = 0; i<2; i++)
-		{
+
+		for (int i = 0; i < 5; i++) {
 			id = sc.nextInt();
 			marke = sc.next();
 			vermietet = sc.nextBoolean();
@@ -100,22 +124,15 @@ public class Start extends Application {
 			monat = sc.next();
 			jahr = sc.nextInt();
 			vermietetVon = sc.next();
-			
+
 			mt.addNeueZeile(id, marke, vermietet, tag, monat, jahr, vermietetVon);
-			
+
 		}
-		sc.close();	
-		
+		sc.close();
 
 		primaryStage.setScene(scene);
 
 		primaryStage.show();
-		
-		
-		
-		
-		
-		
 
 	}
 
@@ -153,7 +170,7 @@ public class Start extends Application {
 		ObservableList<Integer> jahre = FXCollections.observableArrayList(2016, 2017);
 		ComboBox<Integer> jahrcb = new ComboBox<Integer>(jahre);
 
-		Button addButton = new Button("Add");
+		Button addButton = new Button("Anlegen");
 
 		addButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -166,7 +183,7 @@ public class Start extends Application {
 				} catch (NumberFormatException e) {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Type Error...");
-					alert.setContentText("Das eingegebene Wert fur den id" + idField.getText() + "ist keine Zahl");
+					alert.setContentText("Das eingegebene Wert fur die id" + idField.getText() + "ist keine Zahl");
 					alert.showAndWait();
 				}
 
@@ -193,49 +210,43 @@ public class Start extends Application {
 			}
 
 		});
-		
+
 		Button deleteButton = new Button("delete");
-		
+
 		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				
+
 				int id = 0;
 				try {
 					id = Integer.parseInt(idField.getText());
 				} catch (NumberFormatException e) {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Type Error...");
-					alert.setContentText("Das eingegebene Wert fur den id" + idField.getText() + "ist keine Zahl");
+					alert.setContentText("Das eingegebene Wert fur die id" + idField.getText() + "ist keine Zahl");
 					alert.showAndWait();
 				}
 
-				
-				
 				mt.deleteZeile(id);
-		
-		
-		
-		
+
 			}
-			});
-		
-		
+		});
+
 		Button vermietenButton = new Button("Vermieten");
-		
+
 		vermietenButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				
+
 				int id = 0;
 				try {
 					id = Integer.parseInt(idField.getText());
 				} catch (NumberFormatException e) {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Type Error...");
-					alert.setContentText("Das eingegebene Wert fur den id" + idField.getText() + "ist keine Zahl");
+					alert.setContentText("Das eingegebene Wert fur die id" + idField.getText() + "ist keine Zahl");
 					alert.showAndWait();
 				}
 
@@ -246,27 +257,61 @@ public class Start extends Application {
 				String monat;
 				Integer jahr;
 
-				
+				try {
 					tag = tagcb.getValue();
 					monat = monatcb.getValue();
 					jahr = jahrcb.getValue();
 					vermietetVon = vermietetVonField.getText();
-				
-				
-				mt.vermietenDatum(id,marke,vermietet,tag,monat,jahr,vermietetVon);
-		
-		
-		
-		
+
+					mt.vermietenDatum(id, marke, vermietet, tag, monat, jahr, vermietetVon);
+
+				} catch (NullPointerException e) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Type Error...");
+					alert.setContentText("Bitte gib tag, monat, jahr und Ausleihername!!!!");
+					alert.showAndWait();
+
+				}
+
 			}
-			});
-		
-		
-	
-		
+		});
+
+		Button markeSucheButton = new Button("Suche nach Marke");
+		markeSucheButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+				String liste;
+				String marke = markeField.getText();
+
+				liste = mt.nachMarkeSuchen(marke);
+
+				if (!liste.isEmpty()) {
+
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setResizable(true);
+					alert.setTitle("Results");
+					alert.setHeaderText("Mietwagen nach der Marke suchen");
+					alert.setContentText(liste);
+
+					alert.showAndWait();
+				}
+
+				else {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Type Error...");
+					alert.setContentText("Keine " + marke + " Mietwagen !!!!");
+					alert.showAndWait();
+
+				}
+
+			}
+		});
 
 		hbox.getChildren().addAll(idLabel, idField, markeLabel, markeField, vermietetLabel, vermietetBox, datumLabel,
-				tagcb, monatcb, jahrcb, vermietetVonLabel, vermietetVonField, addButton,deleteButton,vermietenButton);
+				tagcb, monatcb, jahrcb, vermietetVonLabel, vermietetVonField, addButton, deleteButton, vermietenButton,
+				markeSucheButton);
 		return hbox;
 
 	}

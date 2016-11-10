@@ -48,13 +48,19 @@ public class TestUnternehmen {
 	}
 
 	@Test
-	public void testSuchenIdMarke() {
+	public void testsuchenMarke() {
 		Mietwagen m = new Mietwagen(1,"VW",false,null,"Sheila");
-		Mietwagen m1 = new Mietwagen(2,"VW",false,null,"Sheila");
-		
+		Mietwagen m1 = new Mietwagen(2,"VW",false,null,"Alex");
+		Mietwagen m2 = new Mietwagen(3,"Opel",false,null,"Anna");
+		ArrayList<Mietwagen> markeList = new ArrayList<Mietwagen>();
+		markeList.add(m);
+		markeList.add(m1);
 		assertEquals(true,u.anlegen(m)); 
-		assertEquals(0,u.suchenIdMarke(m.getId(),"VW"));
-		assertEquals(-1,u.suchenIdMarke(m1.getId(),"VW"));
+		assertEquals(true,u.anlegen(m1)); 
+		assertEquals(true,u.anlegen(m2)); 
+		
+		assertEquals(markeList, u.suchenMarke("VW"));
+		
 	}
 
 	@Test

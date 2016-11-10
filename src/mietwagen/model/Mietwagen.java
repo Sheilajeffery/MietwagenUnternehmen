@@ -42,7 +42,7 @@ public class Mietwagen {
 		this.marke = marke;
 	}
 
-	public boolean isVermietet() {
+	public boolean getVermietet() {
 		return vermietet;
 	}
 
