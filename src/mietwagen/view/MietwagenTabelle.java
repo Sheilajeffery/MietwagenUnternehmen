@@ -172,60 +172,50 @@ public class MietwagenTabelle {
 		Text tId = new Text();
 		Text tMarke = new Text();
 		Text tVermietet = new Text();
-		Text tVermietetVon = new Text();
 		Text tTag = new Text();
 		Text tMonat = new Text();
 		Text tJahr = new Text();
+		Text tVermietetVon = new Text();
 
 		tId.setText(id + "");
 		tMarke.setText(marke);
 
-	
-			tVermietet.setText("ja");
-			tTag.setText(Integer.toString(tag));
-			tMonat.setText(monat);
-			tJahr.setText(Integer.toString(jahr));
-			tVermietetVon.setText(vermietetVon + "");
-		
+		tVermietet.setText("ja");
+		tTag.setText(Integer.toString(tag));
+		tMonat.setText(monat);
+		tJahr.setText(Integer.toString(jahr));
+		tVermietetVon.setText(vermietetVon);
 
-		
 		Datum datum;
 		datum = new Datum(tag.intValue(), monat, jahr.intValue());
-		
 
-		Mietwagen m = new Mietwagen(id, marke, vermietet, datum, vermietetVon);
-		
+		Mietwagen m = new Mietwagen(id, null, false, null, null);
+
 		int i;
 		i = u.suchen(m);
-		Mietwagen mi = u.getMietwagenList().get(i);
-		
-		if(i != -1 && !mi.getVermietet()){
-			u.vermietenBisDatum(m, datum);
-			
-		
-		
+		 Mietwagen mi = u.getMietwagenList().get(i);
 
-		DataMietwagen dm = new DataMietwagen();
-		dm = tabelle.getItems().get(i);
-		
+		if (i != -1) {
+			u.vermietenBisDatum(mi, datum);
+
+			DataMietwagen dm = new DataMietwagen();
+			dm = tabelle.getItems().get(i);
+
 			dm.setVermietet(tVermietet);
 			dm.setTag(tTag);
 			dm.setMonat(tMonat);
 			dm.setJahr(tJahr);
 			dm.setVermietetVon(tVermietetVon);
-		
-			tabelle.getItems().set(i, dm);}
-			
-			else
-			{
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Type Error...");
-				alert.setContentText("Auto mit der id: " + id + " ist schon vermietet!");
-				alert.showAndWait();
-			}
+
+			tabelle.getItems().set(i, dm);
+		} else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Type Error...");
+			alert.setContentText("Es gibt kein Mietwagen mit der id: " + id);
+			alert.showAndWait();
+		}
+
 	}
-
-
 
 	public String nachMarkeSuchen(String marke) {
 		String markeListe;
@@ -249,21 +239,26 @@ public class MietwagenTabelle {
 		return li;
 
 	}
-/*
-	public String listeSpeichern() {
-		String liste="";
-		System.out.println(u.getMietwagenList());
+	/*
+	 * public String listeSpeichern() { String liste="";
+	 * System.out.println(u.getMietwagenList());
+	 * 
+	 * for (Mietwagen m : u.getMietwagenList()) { liste = liste +
+	 * m.getId()+"\n"+ m.getMarke()+"\n" +
+	 * Integer.toString(m.getVermietet_bis_Datum().getTag())+"\n" +
+	 * m.getVermietet_bis_Datum().getMonat()+"\n" +
+	 * Integer.toString(m.getVermietet_bis_Datum().getJahr())
+	 * +"\n"+m.getVermietetVon()+"\n";
+	 * 
+	 * }
+	 * 
+	 * return liste; }
+	 * 
+	 */
 
-		for (Mietwagen m : u.getMietwagenList()) {
-			liste = liste + m.getId()+"\n"+ m.getMarke()+"\n" + Integer.toString(m.getVermietet_bis_Datum().getTag())+"\n"
-					+ m.getVermietet_bis_Datum().getMonat()+"\n" + Integer.toString(m.getVermietet_bis_Datum().getJahr())
-					+"\n"+m.getVermietetVon()+"\n";
+	public boolean istVermietet(int id) {
+		Mietwagen m = u.getMietwagenList().get(id);
 
-		}
-		
-		return liste;
+		return m.getVermietet();
 	}
-
-*/	
-
 }

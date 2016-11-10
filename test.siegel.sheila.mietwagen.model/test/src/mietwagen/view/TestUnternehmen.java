@@ -97,5 +97,6 @@ public class TestUnternehmen {
 		assertEquals( new Datum(1,"Januar",2017),m.getVermietet_bis_Datum());
 		
 	}
-
+	
+	
 }

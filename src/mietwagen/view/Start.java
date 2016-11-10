@@ -57,43 +57,33 @@ public class Start extends Application {
 
 		menuFile.getItems().add(exit);
 		menuBar.getMenus().add(menuFile);
-/*
-		Button saveButton = new Button("Tabelle Speichern");
-
-		saveButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-
-				String liste = mt.listeSpeichern();
-
-				try {
-					PrintWriter writer = new PrintWriter("input.txt");
-					writer.print(liste);
-					writer.close();
-				} catch (Exception e) {
-					System.out.println("Konnte nicht speichern!");
-
-				}
-				if (!liste.isEmpty()) {
-					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setTitle("Succes");
-					alert.setContentText("Die Liste wurde gespeichert!");
-					alert.showAndWait();
-				} else {
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Failed");
-					alert.setContentText("Die Liste wurde nicht gespeichert!");
-					alert.showAndWait();
-				}
-
-			}
-		});
-
-border.setRight(saveButton);
-*/
+		/*
+		 * Button saveButton = new Button("Tabelle Speichern");
+		 * 
+		 * saveButton.setOnAction(new EventHandler<ActionEvent>() {
+		 * 
+		 * @Override public void handle(ActionEvent event) {
+		 * 
+		 * String liste = mt.listeSpeichern();
+		 * 
+		 * try { PrintWriter writer = new PrintWriter("input.txt");
+		 * writer.print(liste); writer.close(); } catch (Exception e) {
+		 * System.out.println("Konnte nicht speichern!");
+		 * 
+		 * } if (!liste.isEmpty()) { Alert alert = new
+		 * Alert(AlertType.CONFIRMATION); alert.setTitle("Succes");
+		 * alert.setContentText("Die Liste wurde gespeichert!");
+		 * alert.showAndWait(); } else { Alert alert = new
+		 * Alert(AlertType.ERROR); alert.setTitle("Failed");
+		 * alert.setContentText("Die Liste wurde nicht gespeichert!");
+		 * alert.showAndWait(); }
+		 * 
+		 * } });
+		 * 
+		 * border.setRight(saveButton);
+		 */
 		border.setTop(menuBar);
-		
+
 		border.setCenter(mt.grid());
 		border.setBottom(addMietwagen());
 
@@ -250,27 +240,39 @@ border.setRight(saveButton);
 					alert.showAndWait();
 				}
 
-				String marke = markeField.getText();
-				Boolean vermietet = vermietetBox.isSelected();
-				String vermietetVon;
-				Integer tag;
-				String monat;
-				Integer jahr;
+				if (!mt.istVermietet(id)) {
+					String marke = markeField.getText();
+					Boolean vermietet = vermietetBox.isSelected();
+					String vermietetVon;
+					Integer tag;
+					String monat;
+					Integer jahr;
 
-				try {
-					tag = tagcb.getValue();
-					monat = monatcb.getValue();
-					jahr = jahrcb.getValue();
-					vermietetVon = vermietetVonField.getText();
+					try {
 
-					mt.vermietenDatum(id, marke, vermietet, tag, monat, jahr, vermietetVon);
+						tag = tagcb.getValue();
+						monat = monatcb.getValue();
+						jahr = jahrcb.getValue();
+						if(!vermietetVonField.getText().isEmpty())
+						vermietetVon = vermietetVonField.getText();
+						else
+							throw new NullPointerException();
+							
+						
+						mt.vermietenDatum(id, marke, vermietet, tag, monat, jahr, vermietetVon);
 
-				} catch (NullPointerException e) {
+					} catch (NullPointerException e) {
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.setTitle("Parse Error...");
+						alert.setContentText("Bitte gib tag, monat, jahr und Ausleihername!!!!");
+						alert.showAndWait();
+
+					}
+				} else {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Type Error...");
-					alert.setContentText("Bitte gib tag, monat, jahr und Ausleihername!!!!");
+					alert.setContentText("Auto mit der id: " + id + " ist schon vermietet!");
 					alert.showAndWait();
-
 				}
 
 			}

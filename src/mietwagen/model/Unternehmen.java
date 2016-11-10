@@ -78,6 +78,7 @@ public class Unternehmen {
 		}
 		return false; // ist schon vermietet oder existiert nicht
 	}
+	
 /*
 	public void printList() {
 
