@@ -211,7 +211,7 @@ public class Start extends Application {
 					alert.showAndWait();
 				}
 
-				String marke = markeField.getText();
+				
 				
 				mt.deleteZeile(id);
 		
@@ -222,9 +222,51 @@ public class Start extends Application {
 			});
 		
 		
+		Button vermietenButton = new Button("Vermieten");
+		
+		vermietenButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				
+				int id = 0;
+				try {
+					id = Integer.parseInt(idField.getText());
+				} catch (NumberFormatException e) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Type Error...");
+					alert.setContentText("Das eingegebene Wert fur den id" + idField.getText() + "ist keine Zahl");
+					alert.showAndWait();
+				}
+
+				String marke = markeField.getText();
+				Boolean vermietet = vermietetBox.isSelected();
+				String vermietetVon;
+				Integer tag;
+				String monat;
+				Integer jahr;
+
+				
+					tag = tagcb.getValue();
+					monat = monatcb.getValue();
+					jahr = jahrcb.getValue();
+					vermietetVon = vermietetVonField.getText();
+				
+				
+				mt.vermietenDatum(id,marke,vermietet,tag,monat,jahr,vermietetVon);
+		
+		
+		
+		
+			}
+			});
+		
+		
+	
+		
 
 		hbox.getChildren().addAll(idLabel, idField, markeLabel, markeField, vermietetLabel, vermietetBox, datumLabel,
-				tagcb, monatcb, jahrcb, vermietetVonLabel, vermietetVonField, addButton,deleteButton);
+				tagcb, monatcb, jahrcb, vermietetVonLabel, vermietetVonField, addButton,deleteButton,vermietenButton);
 		return hbox;
 
 	}

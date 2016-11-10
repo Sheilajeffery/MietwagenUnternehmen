@@ -106,8 +106,6 @@ public class MietwagenTabelle {
 		} else
 			tVermietet.setText("nein");
 
-		
-
 		boolean anlegenOK;
 		Datum datum;
 
@@ -133,27 +131,75 @@ public class MietwagenTabelle {
 
 			tabelle.getItems().add(dm);
 			
+
 		}
 	}
-	
-	public void deleteZeile(int id){
+
+	public void deleteZeile(int id) {
 		Text tId = new Text();
-		Text tMarke = new Text();
 		
+
 		tId.setText(Integer.toString(id));
-		
-		
-		Mietwagen m = new Mietwagen(id,null,false,null,null);
+
+		Mietwagen m = new Mietwagen(id, null, false, null, null);
 		int i;
 		i = u.suchen(m);
-		DataMietwagen dm = new DataMietwagen();
-		 if(u.loschen(m))
+		
+		if (u.loschen(m))
+
+			tabelle.getItems().remove(i);
+	}
+	
+	public void vermietenDatum(int id, String marke, boolean vermietet, Integer tag, String monat, Integer jahr,
+			String vermietetVon) {
+
+		CheckBox cb = new CheckBox();
+		Text tId = new Text();
+		Text tMarke = new Text();
+		Text tVermietet = new Text();
+		Text tVermietetVon = new Text();
+		Text tTag = new Text();
+		Text tMonat = new Text();
+		Text tJahr = new Text();
+
+		tId.setText(id + "");
+		tMarke.setText(marke);
+
+	
+			tVermietet.setText("ja");
+			tTag.setText(Integer.toString(tag));
+			tMonat.setText(monat);
+			tJahr.setText(Integer.toString(jahr));
+			tVermietetVon.setText(vermietetVon + "");
+		
+
+		
+		Datum datum;
+		datum = new Datum(tag.intValue(), monat, jahr.intValue());
+		
+
+		Mietwagen m = new Mietwagen(id, marke, vermietet, datum, vermietetVon);
+		
+		int i;
+		i = u.suchen(m);
+		
+		if(i != -1)
+			u.vermietenBisDatum(m, datum);
 			
-		tabelle.getItems().remove(i);
 		
 		
+
+		DataMietwagen dm = new DataMietwagen();
+		dm = tabelle.getItems().get(i);
 		
+			dm.setVermietet(tVermietet);
+			dm.setTag(tTag);
+			dm.setMonat(tMonat);
+			dm.setJahr(tJahr);
+			dm.setVermietetVon(tVermietetVon);
 		
+			tabelle.getItems().set(i, dm);
+			tabelle.getItems().get(i);
 	}
 
 }
