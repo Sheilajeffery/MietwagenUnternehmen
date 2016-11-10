@@ -57,31 +57,31 @@ public class Start extends Application {
 
 		menuFile.getItems().add(exit);
 		menuBar.getMenus().add(menuFile);
-		/*
-		 * Button saveButton = new Button("Tabelle Speichern");
-		 * 
-		 * saveButton.setOnAction(new EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * String liste = mt.listeSpeichern();
-		 * 
-		 * try { PrintWriter writer = new PrintWriter("input.txt");
-		 * writer.print(liste); writer.close(); } catch (Exception e) {
-		 * System.out.println("Konnte nicht speichern!");
-		 * 
-		 * } if (!liste.isEmpty()) { Alert alert = new
-		 * Alert(AlertType.CONFIRMATION); alert.setTitle("Succes");
-		 * alert.setContentText("Die Liste wurde gespeichert!");
-		 * alert.showAndWait(); } else { Alert alert = new
-		 * Alert(AlertType.ERROR); alert.setTitle("Failed");
-		 * alert.setContentText("Die Liste wurde nicht gespeichert!");
-		 * alert.showAndWait(); }
-		 * 
-		 * } });
-		 * 
-		 * border.setRight(saveButton);
-		 */
+		
+		  Button saveButton = new Button("Tabelle Speichern");
+		  
+		  saveButton.setOnAction(new EventHandler<ActionEvent>() {
+		  
+		  @Override public void handle(ActionEvent event) {
+		  
+		  String liste = mt.listeSpeichern();
+		 
+		  try { PrintWriter writer = new PrintWriter("input.txt");
+		  writer.print(liste); writer.close(); } catch (Exception e) {
+		  System.out.println("Konnte nicht speichern!");
+		  
+		  } if (!liste.isEmpty()) { Alert alert = new
+		  Alert(AlertType.CONFIRMATION); alert.setTitle("Succes");
+		  alert.setContentText("Die Liste wurde gespeichert!");
+		  alert.showAndWait(); } else { Alert alert = new
+		  Alert(AlertType.ERROR); alert.setTitle("Failed");
+		  alert.setContentText("Die Liste wurde nicht gespeichert!");
+		  alert.showAndWait(); }
+		  
+		  } });
+		  
+		 border.setRight(saveButton);
+		
 		border.setTop(menuBar);
 
 		border.setCenter(mt.grid());

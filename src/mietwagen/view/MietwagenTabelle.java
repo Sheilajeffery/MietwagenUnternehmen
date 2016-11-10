@@ -193,7 +193,7 @@ public class MietwagenTabelle {
 
 		int i;
 		i = u.suchen(m);
-		 Mietwagen mi = u.getMietwagenList().get(i);
+		Mietwagen mi = u.getMietwagenList().get(i);
 
 		if (i != -1) {
 			u.vermietenBisDatum(mi, datum);
@@ -239,22 +239,28 @@ public class MietwagenTabelle {
 		return li;
 
 	}
-	/*
-	 * public String listeSpeichern() { String liste="";
-	 * System.out.println(u.getMietwagenList());
-	 * 
-	 * for (Mietwagen m : u.getMietwagenList()) { liste = liste +
-	 * m.getId()+"\n"+ m.getMarke()+"\n" +
-	 * Integer.toString(m.getVermietet_bis_Datum().getTag())+"\n" +
-	 * m.getVermietet_bis_Datum().getMonat()+"\n" +
-	 * Integer.toString(m.getVermietet_bis_Datum().getJahr())
-	 * +"\n"+m.getVermietetVon()+"\n";
-	 * 
-	 * }
-	 * 
-	 * return liste; }
-	 * 
-	 */
+
+	public String listeSpeichern() {
+		String liste = "";
+		System.out.println(u.getMietwagenList());
+
+		for (Mietwagen m : u.getMietwagenList()) {
+			if(m.getVermietet()  == true)
+			liste = liste + m.getId() + "\n" + m.getMarke() + "\n"+Boolean.toString(m.getVermietet())+"\n"
+					+ Integer.toString(m.getVermietet_bis_Datum().getTag()) + "\n"
+					+ m.getVermietet_bis_Datum().getMonat() + "\n"
+					+ Integer.toString(m.getVermietet_bis_Datum().getJahr()) + "\n" + m.getVermietetVon() + "\n";
+
+			else
+				liste = liste + m.getId() + "\n" + m.getMarke() + "\n"+Boolean.toString(m.getVermietet())+"\n"
+						+ "false\n0\nnull\n0\nnull";
+
+				
+				
+		}
+
+		return liste;
+	}
 
 	public boolean istVermietet(int id) {
 		Mietwagen m = u.getMietwagenList().get(id);
