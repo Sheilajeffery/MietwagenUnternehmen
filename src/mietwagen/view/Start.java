@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -86,6 +87,8 @@ public class Start extends Application {
 
 		border.setCenter(mt.grid());
 		border.setBottom(addMietwagen());
+		border.setLeft(deleteMietwagen());
+		
 
 		Scene scene = new Scene(border);
 
@@ -200,29 +203,7 @@ public class Start extends Application {
 			}
 
 		});
-
-		Button deleteButton = new Button("Loeschen");
-
-		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-
-				int id = 0;
-				try {
-					id = Integer.parseInt(idField.getText());
-				} catch (NumberFormatException e) {
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Type Error...");
-					alert.setContentText("Das eingegebene Wert fur die id" + idField.getText() + "ist keine Zahl");
-					alert.showAndWait();
-				}
-
-				mt.deleteZeile(id);
-
-			}
-		});
-
+		
 		Button vermietenButton = new Button("Vermieten");
 
 		vermietenButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -312,11 +293,50 @@ public class Start extends Application {
 		});
 
 		hbox.getChildren().addAll(idLabel, idField, markeLabel, markeField, vermietetLabel, vermietetBox, datumLabel,
-				tagcb, monatcb, jahrcb, vermietetVonLabel, vermietetVonField, addButton, deleteButton, vermietenButton,
+				tagcb, monatcb, jahrcb, vermietetVonLabel, vermietetVonField, addButton, vermietenButton,
 				markeSucheButton);
 		return hbox;
 
 	}
+	
+	public HBox deleteMietwagen() {
+		HBox hbox = new HBox();
+		hbox.setPadding(new Insets(50, 5, 40, 5));
+		hbox.setSpacing(5);
+		hbox.setStyle("-fx-background-color: #FFFFFF");
 
+		Label idLabel = new Label("ID: ");
+		TextField idField = new TextField();
+		idField.setMaxWidth(40);
+		
+		Button deleteButton = new Button("Loeschen");
+
+		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+				int id = 0;
+				try {
+					id = Integer.parseInt(idField.getText());
+				} catch (NumberFormatException e) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Type Error...");
+					alert.setContentText("Das eingegebene Wert fur die id" + idField.getText() + "ist keine Zahl");
+					alert.showAndWait();
+				}
+
+				mt.deleteZeile(id);
+
+			}
+		});
+		
+		
+		
+		
+		hbox.getChildren().addAll(idLabel, idField,deleteButton);
+		return hbox;
+	}
+	
 	
 }
