@@ -10,6 +10,12 @@ public class Datum {
 		this.monat = monat;
 		this.jahr = jahr;
 	}
+	
+	/**
+	 * Uberschreben der equals Methode fur Datum Objekte
+	 * @return true wenn die Daten denselben Tag, Monat und Jahr haben
+	 */
+	
 @Override
 	public boolean equals(Object o){
 	

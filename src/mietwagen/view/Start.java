@@ -4,21 +4,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import mietwagen.model.Mietwagen;
 
 public class Start extends Application {
 	File file = new File("input.txt");
@@ -58,37 +55,51 @@ public class Start extends Application {
 
 		menuFile.getItems().add(exit);
 		menuBar.getMenus().add(menuFile);
-		
-		  Button saveButton = new Button("Tabelle Speichern");
-		  
-		  saveButton.setOnAction(new EventHandler<ActionEvent>() {
-		  
-		  @Override public void handle(ActionEvent event) {
-		  
-		  String liste = mt.listeSpeichern();
-		 
-		  try { PrintWriter writer = new PrintWriter("input.txt");
-		  writer.print(liste); writer.close(); } catch (Exception e) {
-		  System.out.println("Konnte nicht speichern!");
-		  
-		  } if (!liste.isEmpty()) { Alert alert = new
-		  Alert(AlertType.CONFIRMATION); alert.setTitle("Succes");
-		  alert.setContentText("Die Liste wurde gespeichert!");
-		  alert.showAndWait(); } else { Alert alert = new
-		  Alert(AlertType.ERROR); alert.setTitle("Failed");
-		  alert.setContentText("Die Liste wurde nicht gespeichert!");
-		  alert.showAndWait(); }
-		  
-		  } });
-		  
-		 border.setRight(saveButton);
-		
+		/**
+		 * Der Knopf fur das Speichern der Tabelle in fer input.txt file Gibt
+		 * ein Allert fur CONFIRMATION(falls es gespeichert wurde) oder ERROR
+		 * (wenn die File nicht existiert)
+		 */
+
+		Button saveButton = new Button("Tabelle Speichern");
+
+		saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+				String liste = mt.listeSpeichern();
+
+				try {
+					PrintWriter writer = new PrintWriter("input.txt");
+					writer.print(liste);
+					writer.close();
+				} catch (Exception e) {
+					System.out.println("Konnte nicht speichern!");
+
+				}
+				if (!liste.isEmpty()) {
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("Succes");
+					alert.setContentText("Die Liste wurde gespeichert!");
+					alert.showAndWait();
+				} else {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Failed");
+					alert.setContentText("Die Liste wurde nicht gespeichert!");
+					alert.showAndWait();
+				}
+
+			}
+		});
+
+		border.setRight(saveButton);
+
 		border.setTop(menuBar);
 
 		border.setCenter(mt.grid());
 		border.setBottom(addMietwagen());
 		border.setLeft(deleteMietwagen());
-		
 
 		Scene scene = new Scene(border);
 
@@ -108,8 +119,10 @@ public class Start extends Application {
 		Integer tag;
 		String monat;
 		Integer jahr;
-
-		while(sc.hasNext()) {
+		/**
+		 * Wir werden immer die Eintragen von der File input.txt anlegen
+		 */
+		while (sc.hasNext()) {
 			id = sc.nextInt();
 			marke = sc.next();
 			vermietet = sc.nextBoolean();
@@ -129,6 +142,12 @@ public class Start extends Application {
 
 	}
 
+	/**
+	 * Der HBox in dem wir die Werte fur einen Mietwagen geben um es anzulegen,
+	 * oder vermieten zu konnen
+	 * 
+	 * @return input box
+	 */
 	public HBox addMietwagen() {
 		HBox hbox = new HBox();
 		hbox.setPadding(new Insets(50, 5, 40, 5));
@@ -162,6 +181,11 @@ public class Start extends Application {
 
 		ObservableList<Integer> jahre = FXCollections.observableArrayList(2016, 2017);
 		ComboBox<Integer> jahrcb = new ComboBox<Integer>(jahre);
+
+		/**
+		 * Wir benutzen die Werte aus der HBox und rufen die addNeueZeile
+		 * Methode von der MietwagenTabelle
+		 */
 
 		Button addButton = new Button("Anlegen");
 
@@ -203,7 +227,12 @@ public class Start extends Application {
 			}
 
 		});
-		
+
+		/**
+		 * Vermieten Knopf Wir kriegen Error falls der Mietwagen vermietet ist
+		 * oder wenn wir keine Werte fur den Tag/Monat/Jahr/VermietetVon
+		 * eingeben
+		 */
 		Button vermietenButton = new Button("Vermieten");
 
 		vermietenButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -234,12 +263,11 @@ public class Start extends Application {
 						tag = tagcb.getValue();
 						monat = monatcb.getValue();
 						jahr = jahrcb.getValue();
-						if(!vermietetVonField.getText().isEmpty())
-						vermietetVon = vermietetVonField.getText();
+						if (!vermietetVonField.getText().isEmpty())
+							vermietetVon = vermietetVonField.getText();
 						else
 							throw new NullPointerException();
-							
-						
+
 						mt.vermietenDatum(id, marke, vermietet, tag, monat, jahr, vermietetVon);
 
 					} catch (NullPointerException e) {
@@ -259,6 +287,10 @@ public class Start extends Application {
 			}
 		});
 
+		/**
+		 * Wir benutzen die nachMarkeSuchen Method aus der MIetwagenTabelle um
+		 * die liste in einem INFORMATION Fenster zu zeigen
+		 */
 		Button markeSucheButton = new Button("Suche nach Marke");
 		markeSucheButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -298,7 +330,13 @@ public class Start extends Application {
 		return hbox;
 
 	}
-	
+
+	/**
+	 * Ein enderen Box mit ein idFeld und einen Knopf um einen Mietwagen zu
+	 * loeschen
+	 * 
+	 * @return Box
+	 */
 	public HBox deleteMietwagen() {
 		HBox hbox = new HBox();
 		hbox.setPadding(new Insets(50, 5, 40, 5));
@@ -308,7 +346,7 @@ public class Start extends Application {
 		Label idLabel = new Label("ID: ");
 		TextField idField = new TextField();
 		idField.setMaxWidth(40);
-		
+
 		Button deleteButton = new Button("Loeschen");
 
 		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -330,13 +368,9 @@ public class Start extends Application {
 
 			}
 		});
-		
-		
-		
-		
-		hbox.getChildren().addAll(idLabel, idField,deleteButton);
+
+		hbox.getChildren().addAll(idLabel, idField, deleteButton);
 		return hbox;
 	}
-	
-	
+
 }

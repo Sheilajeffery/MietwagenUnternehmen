@@ -14,7 +14,10 @@ public class Mietwagen {
 		this.vermietet_bis_Datum = vermietet_bis_Datum;
 		this.vermietetVon = vermietetVon;
 	}
-	
+	/**
+	 * Uberschreiben der equals Method fur Mietwagen
+	 * @return true wenn die Mietwagen dieseble id haben	
+	*/
 	@Override
 	public boolean equals(Object o)
 	{

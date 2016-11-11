@@ -8,6 +8,12 @@ public class Unternehmen {
 
 	public static Unternehmen instance = null;
 
+	/**
+	 * Wir wollen nur ein einziges Instanz dur die Unternehmen haben
+	 * 
+	 * @return die instance
+	 */
+
 	public static Unternehmen getInstance() {
 
 		if (instance == null) {
@@ -16,19 +22,27 @@ public class Unternehmen {
 		return instance;
 	}
 
-	/*
-	 * public Unternehmen() { mietwagenList = new ArrayList<Mietwagen>(); }
-	 */
 	public ArrayList<Mietwagen> getMietwagenList() {
 		return mietwagenList;
 	}
 
+	/**
+	 * Weil wir nur eine instance der Unternehmen haben fur die Teste muss die
+	 * ArrayList leer sein.
+	 */
 	public void emptyList() {
 		mietwagenList = new ArrayList<Mietwagen>();
 
 	}
 
-	// gives you the position of the car in the array
+	/**
+	 * Sucht die Position des Mietwagens
+	 * 
+	 * @param m
+	 *            in der ArrayList
+	 * @return indexOf m falls es existiert, oder -1 falls der Wagen nicht
+	 *         existiert
+	 */
 	public int suchen(Mietwagen m) {
 
 		if (mietwagenList.contains(m))
@@ -37,19 +51,32 @@ public class Unternehmen {
 			return -1;
 	}
 
+	/**
+	 * Wir wollen eine Liste von Mietwagen mit dieser Marke
+	 * 
+	 * @param marke
+	 *            des Mietwagens
+	 * @return liste von Mietwagen
+	 */
 	public ArrayList<Mietwagen> suchenMarke(String marke) {
 
 		ArrayList<Mietwagen> markeList = new ArrayList<Mietwagen>();
-		
+
 		for (Mietwagen m : mietwagenList)
-			if(m.getMarke().equals(marke))
+			if (m.getMarke().equals(marke))
 				markeList.add(m);
-			
-			return markeList;	
-		
+
+		return markeList;
 
 	}
 
+	/**
+	 * Wir prufen ob der Mietwagen mit der id schon in der liste existiert
+	 * 
+	 * @param m
+	 *            den wir anlegen wollen
+	 * @return true falls es angelegt wurde, anderenfalls false
+	 */
 	public boolean anlegen(Mietwagen m) {
 
 		if (!mietwagenList.contains(m)) {
@@ -60,6 +87,15 @@ public class Unternehmen {
 
 	}
 
+	/**
+	 * Wir prufen ob der Mietwagen mit der id in der liste existiert und
+	 * loeschen es
+	 * 
+	 * @param m
+	 *            den wir loeschen wollen
+	 * @return true falls es geloescht wurde, sonst false
+	 */
+
 	public boolean loschen(Mietwagen m) {
 		if (suchen(m) != -1) {
 			mietwagenList.remove(suchen(m));
@@ -68,6 +104,16 @@ public class Unternehmen {
 			return false;// es existiert nicht!
 	}
 
+	/**
+	 * Wenn der Mietwagen existiert unde falls es nicht vermietet ist, speichern
+	 * wir ein Vermietendatum
+	 * 
+	 * @param m
+	 *            Auto zu vermieten
+	 * @param datum
+	 *            Vermietet bis datum
+	 * @return true falls es existiert,vermietbar war unde jezt vermietet wurde
+	 */
 	public boolean vermietenBisDatum(Mietwagen m, Datum datum) {
 		if (mietwagenList.contains(m) && !m.vermietet) {
 			{
@@ -78,15 +124,5 @@ public class Unternehmen {
 		}
 		return false; // ist schon vermietet oder existiert nicht
 	}
-	
-/*
-	public void printList() {
 
-		for (Mietwagen m : mietwagenList)
-			System.out.println("id: " + Integer.toString(m.getId()) + ", marke: " + m.getMarke() + ", vermietet: "
-					+ Boolean.toString(m.vermietet) + ", datum:" + m.getVermietet_bis_Datum() + ", vermietetVon: "
-					+ m.getVermietetVon());
-
-	}
-*/
 }

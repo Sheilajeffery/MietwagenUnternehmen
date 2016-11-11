@@ -1,18 +1,13 @@
 package mietwagen.view;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
@@ -20,6 +15,15 @@ import javafx.scene.text.Text;
 import mietwagen.model.Datum;
 import mietwagen.model.Mietwagen;
 import mietwagen.model.Unternehmen;
+
+/**
+ * 
+ * @author SheilaS MietwagenTabelle ist ein template fur unsere Application die
+ *         Spalten sind Attribute des
+ *         Mietwagens(id,marke,vermietet,vermietetdatum(tag/monat/jahr),
+ *         vermietetvon)
+ *
+ */
 
 public class MietwagenTabelle {
 
@@ -95,6 +99,21 @@ public class MietwagenTabelle {
 		return grid;
 	}
 
+	/**
+	 * Wir legen neue Mietwagen in der Tabelle un in unserer MietwagenListe Die
+	 * Parameter kriegen wir aus dem StartKlasse , von den input Box
+	 * 
+	 * @param id
+	 * @param marke
+	 * @param vermietet
+	 * @param tag
+	 * @param monat
+	 * @param jahr
+	 * @param vermietetVon
+	 *            falls anlegen true zuruckgibt, speichern wir den Wagen in der
+	 *            Tabelle,sonst kriegen wir ein ErrorMessage (Ein mietwagen mit
+	 *            der id existiert schon)
+	 */
 	public void addNeueZeile(int id, String marke, boolean vermietet, Integer tag, String monat, Integer jahr,
 			String vermietetVon) {
 
@@ -152,6 +171,12 @@ public class MietwagenTabelle {
 		}
 	}
 
+	/**
+	 * Loeschen des Mietwagens mit einer id
+	 * 
+	 * @param id
+	 *            falls es nicht existiert, kriegen wir ein Error
+	 */
 	public void deleteZeile(int id) {
 		Text tId = new Text();
 
@@ -173,6 +198,18 @@ public class MietwagenTabelle {
 		}
 	}
 
+	/**
+	 * Vermietet eines Wagens prufen ob der wagen noch nicht vermietet ist und
+	 * vermieten es
+	 * 
+	 * @param id
+	 * @param marke
+	 * @param vermietet
+	 * @param tag
+	 * @param monat
+	 * @param jahr
+	 * @param vermietetVon
+	 */
 	public void vermietenDatum(int id, String marke, boolean vermietet, Integer tag, String monat, Integer jahr,
 			String vermietetVon) {
 
@@ -225,12 +262,24 @@ public class MietwagenTabelle {
 
 	}
 
+	/**
+	 * Wir suchen alle Wagen die eine Marke haben
+	 * 
+	 * @param marke
+	 * @return markeListe mit den Wagen die diese Marke haben
+	 */
 	public String nachMarkeSuchen(String marke) {
 		String markeListe;
 		markeListe = arrayListToString(u.suchenMarke(marke));
 		return markeListe;
 	}
 
+	/**
+	 * Eine toSTring methode
+	 * 
+	 * @param list
+	 * @return eine Liste in String Form damit wir sie printen konnen
+	 */
 	public static String arrayListToString(ArrayList<Mietwagen> list) {
 
 		String li = "";
@@ -248,30 +297,37 @@ public class MietwagenTabelle {
 
 	}
 
+	/**
+	 * Benutzt die arrayListToString Methode um die MietwagenTabelle in unser
+	 * input.txt speichern konnen
+	 * 
+	 * @return die liste in String form die wir speichern werden
+	 */
 	public String listeSpeichern() {
-		String liste ="";
+		String liste = "";
 		System.out.println(u.getMietwagenList());
 
 		for (Mietwagen m : u.getMietwagenList()) {
-			if(m.getVermietet()  == true)
-			{	//if(!liste.isEmpty())
-					//liste = liste+ "\n";
-			liste = liste + m.getId() + "\n" + m.getMarke() + "\n"+Boolean.toString(m.getVermietet())+"\n"
-					+ Integer.toString(m.getVermietet_bis_Datum().getTag()) + "\n"
-					+ m.getVermietet_bis_Datum().getMonat() + "\n"
-					+ Integer.toString(m.getVermietet_bis_Datum().getJahr()) + "\n" + m.getVermietetVon() + "\n";
-			}
-			else
-				liste = liste + m.getId() + "\n" + m.getMarke() 
-				+ "\n"+Boolean.toString(m.getVermietet())
-				+"\n"+ "0\nnull\n0\nnull\n";
+			if (m.getVermietet() == true) {
+				liste = liste + m.getId() + "\n" + m.getMarke() + "\n" + Boolean.toString(m.getVermietet()) + "\n"
+						+ Integer.toString(m.getVermietet_bis_Datum().getTag()) + "\n"
+						+ m.getVermietet_bis_Datum().getMonat() + "\n"
+						+ Integer.toString(m.getVermietet_bis_Datum().getJahr()) + "\n" + m.getVermietetVon() + "\n";
+			} else
+				liste = liste + m.getId() + "\n" + m.getMarke() + "\n" + Boolean.toString(m.getVermietet()) + "\n"
+						+ "0\nnull\n0\nnull\n";
 
-				
-				
 		}
 
 		return liste;
 	}
+
+	/**
+	 * Prufen ob Mietwagen mit dieser id vermietet ist
+	 * 
+	 * @param id
+	 * @return die Value der getVermietet des Wagens (true / false)
+	 */
 
 	public boolean istVermietet(int id) {
 		Mietwagen m = u.getMietwagenList().get(id);
