@@ -34,11 +34,13 @@ public class MietwagenTabelle {
 
 		TableColumn<DataMietwagen, CheckBox> spalte1 = new TableColumn<DataMietwagen, CheckBox>("#");
 		spalte1.setCellValueFactory(new PropertyValueFactory<DataMietwagen, CheckBox>("select"));
+		spalte1.setSortable(false);
 		spalte1.setMinWidth(22);
 		spalte1.setMaxWidth(22);
 
 		TableColumn<DataMietwagen, Text> spalte2 = new TableColumn<DataMietwagen, Text>("Id");
 		spalte2.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("id"));
+		spalte2.setSortable(false);
 		spalte2.setMinWidth(100);
 		spalte2.setMaxWidth(100);
 
@@ -46,31 +48,37 @@ public class MietwagenTabelle {
 		spalte3.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("marke"));
 		spalte3.setMinWidth(100);
 		spalte3.setMaxWidth(100);
+		spalte3.setSortable(false);
 
 		TableColumn<DataMietwagen, Text> spalte4 = new TableColumn<DataMietwagen, Text>("Vermietet");
 		spalte4.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("vermietet"));
 		spalte4.setMinWidth(100);
 		spalte4.setMaxWidth(1);
+		spalte4.setSortable(false);
 
 		TableColumn<DataMietwagen, Text> spalte5 = new TableColumn<DataMietwagen, Text>("Tag");
 		spalte5.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("tag"));
 		spalte5.setMinWidth(70);
 		spalte5.setMaxWidth(70);
+		spalte5.setSortable(false);
 
 		TableColumn<DataMietwagen, Text> spalte6 = new TableColumn<DataMietwagen, Text>("Monat");
 		spalte6.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("monat"));
 		spalte6.setMinWidth(70);
 		spalte6.setMaxWidth(70);
+		spalte6.setSortable(false);
 
 		TableColumn<DataMietwagen, Text> spalte7 = new TableColumn<DataMietwagen, Text>("Jahr");
 		spalte7.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("jahr"));
 		spalte7.setMinWidth(70);
 		spalte7.setMaxWidth(70);
+		spalte7.setSortable(false);
 
 		TableColumn<DataMietwagen, Text> spalte8 = new TableColumn<DataMietwagen, Text>("Vermietet von");
 		spalte8.setCellValueFactory(new PropertyValueFactory<DataMietwagen, Text>("vermietetVon"));
 		spalte8.setMinWidth(100);
 		spalte8.setMaxWidth(100);
+		spalte8.setSortable(false);
 
 		tabelle.getColumns().addAll(spalte1, spalte2, spalte3, spalte4, spalte5, spalte6, spalte7, spalte8);
 		return tabelle;
@@ -241,19 +249,22 @@ public class MietwagenTabelle {
 	}
 
 	public String listeSpeichern() {
-		String liste = "";
+		String liste ="";
 		System.out.println(u.getMietwagenList());
 
 		for (Mietwagen m : u.getMietwagenList()) {
 			if(m.getVermietet()  == true)
+			{	//if(!liste.isEmpty())
+					//liste = liste+ "\n";
 			liste = liste + m.getId() + "\n" + m.getMarke() + "\n"+Boolean.toString(m.getVermietet())+"\n"
 					+ Integer.toString(m.getVermietet_bis_Datum().getTag()) + "\n"
 					+ m.getVermietet_bis_Datum().getMonat() + "\n"
 					+ Integer.toString(m.getVermietet_bis_Datum().getJahr()) + "\n" + m.getVermietetVon() + "\n";
-
+			}
 			else
-				liste = liste + m.getId() + "\n" + m.getMarke() + "\n"+Boolean.toString(m.getVermietet())+"\n"
-						+ "false\n0\nnull\n0\nnull";
+				liste = liste + m.getId() + "\n" + m.getMarke() 
+				+ "\n"+Boolean.toString(m.getVermietet())
+				+"\n"+ "0\nnull\n0\nnull\n";
 
 				
 				

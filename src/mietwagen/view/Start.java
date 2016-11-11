@@ -106,7 +106,7 @@ public class Start extends Application {
 		String monat;
 		Integer jahr;
 
-		for (int i = 0; i < 5; i++) {
+		while(sc.hasNext()) {
 			id = sc.nextInt();
 			marke = sc.next();
 			vermietet = sc.nextBoolean();
@@ -201,7 +201,7 @@ public class Start extends Application {
 
 		});
 
-		Button deleteButton = new Button("delete");
+		Button deleteButton = new Button("Loeschen");
 
 		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -318,4 +318,5 @@ public class Start extends Application {
 
 	}
 
+	
 }
